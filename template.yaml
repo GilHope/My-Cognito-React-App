@@ -71,3 +71,40 @@ Resources:
               - !Sub "arn:aws:s3:::${S3Bucket}/*"
             Principal:
               AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}"
+
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Sub "${Env}-${CognitoUserPoolName}"
+      AliasAttributes:
+        - email
+      UsernameConfiguration:
+        CaseSensitive: false
+      AutoVerifiedAttributes:
+        - email
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireUppercase: true
+          RequireSymbols: true
+      Schema:
+        - AttributeDataType: String
+          Mutable: true
+          Name: given_name
+          Required: true
+          StringAttributeConstraints:
+            MinLength: "1"
+        - AttributeDataType: String
+          Mutable: true
+          Name: family_name
+          Required: true
+          StringAttributeConstraints:
+            MinLength: "1"
+        - AttributeDataType: String
+          Mutable: true
+          Name: email
+          Required: true
+          StringAttributeConstraints:
+            MinLength: "1"
