@@ -24,6 +24,13 @@ Resources:
   CloudFrontOriginAccessIdentity:
     Type: "AWS::CloudFront::Distribution"
     Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: 'Origin Access Identity'
+        
+        
+  CloudfrontDistribution:
+    Type: "AWS::CloudFront::Distribution"
+    Properties:
       DistributionConfig:
         Comment: "Cloudfront distribution for the static website"
         DefaultRootObject: "index.html"
@@ -33,10 +40,10 @@ Resources:
           - Id: s3-website
             DomainName: !GetAtt S3Bucket.DomainName
             S3OriginConfig:
-              OriginAccessIdentity:
-                Fn::Sub: "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
+              OriginAccessIdentity: 
+                Fn::Sub: 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         DefaultCacheBehavior:
-          Compress: "true"
+          Compress: 'true'
           AllowedMethods:
             - GET
             - HEAD
@@ -44,4 +51,4 @@ Resources:
           ForwardedValues:
             QueryString: false
           TargetOriginId: s3-website
-          ViewerProtocolPolicy: redirect-to-https
+          ViewerProtocolPolicy : redirect-to-https
