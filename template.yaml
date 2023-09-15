@@ -22,7 +22,7 @@ Parameters:
 Resources:
 
   CloudFrontOriginAccessIdentity:
-    Type: "AWS::CloudFront::Distribution"
+    Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
     Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: 'Origin Access Identity'
