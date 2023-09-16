@@ -1,5 +1,6 @@
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Amplify } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 import { awsExports } from './aws-exports';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
@@ -13,6 +14,7 @@ Amplify.configure({
 });
 
 function App() {
+
   const [jwtToken, setJwtToken] = useState('');
 
   useEffect(() => {
@@ -84,13 +86,13 @@ function App() {
           };
         }
       },
-    }}
-    >
+    }}>
       {({ signOut, user}) => (
-        <div>Welcome {user.username}
-        <button onClick={signOut}>Sign out</button>
-        <h4>Your JWT token:</h4>
-        {jwtToken}
+        <div>
+          <p>Welcome {user.username}</p>
+          <button onClick={signOut}>Sign out</button>
+          <h4>Your JWT token:</h4>
+          {jwtToken}
         </div>
       )}
     </Authenticator>
